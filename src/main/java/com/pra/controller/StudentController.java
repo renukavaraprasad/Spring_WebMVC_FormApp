@@ -3,6 +3,7 @@ package com.pra.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.pra.binding.Student;
+import com.pra.entity.StudentEntity;
 import com.pra.repo.StudentRepo;
 
 @Controller
@@ -46,11 +48,11 @@ public class StudentController {
 		model.addAttribute("timings", timingsList);
 	}
 
-	@PostMapping("save")
+	@PostMapping("/save")
 	public String saveStudentFormData(Student student, Model model) {
 		System.out.println(student);
 		
-		com.pra.entity.Student studentEntity = new com.pra.entity.Student();
+		StudentEntity studentEntity = new StudentEntity();
 		BeanUtils.copyProperties(student, studentEntity);
 		studentEntity.setTimings(Arrays.toString(student.getTimings()));
  		studentRepo.save(studentEntity);
@@ -62,9 +64,13 @@ public class StudentController {
 		return "index";
 	}
 
-	@GetMapping("")
-	public String displayStudentFormData() {
+	@GetMapping("/viewStudents")
+	public String getStudentFormData(Model model) {
 
-		return "";
+		List<StudentEntity> findAll = studentRepo.findAll();
+		model.addAttribute("studentsData", findAll);
+		
+		
+		return "data";
 	}
 }

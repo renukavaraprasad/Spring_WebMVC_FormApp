@@ -2,8 +2,8 @@ package com.pra.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.pra.entity.Student;
+import com.pra.entity.StudentEntity;
 
-public interface StudentRepo extends JpaRepository<Student, Integer>{
+public interface StudentRepo extends JpaRepository<StudentEntity, Integer>{
 
 }
